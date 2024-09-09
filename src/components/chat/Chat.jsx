@@ -13,7 +13,8 @@ const Chat=()=>{
     const [open,setOpen]=useState(false)
     const [input,setInput]=useState("")
     const endRef=useRef(null)
-    const {chatId,user}=useChatStore()
+    const {chatId,user,isReceiverBlocked,isCurrentUserBlocked}=useChatStore()
+    
     const {current_user}=useUserStore()
     const [img,setImg]=useState({
         file:null,
@@ -101,9 +102,9 @@ return (
     <div className="chat">
         <div className="top">
             <div className="user">
-                <img src="./avatar.png" alt="" />
+                <img src={user?.avatar ? user?.avatar : "./avatar.png"} alt="" />
                 <div className="texts">
-                    <span>John Doe</span>
+                    <span>{(isCurrentUserBlocked || isReceiverBlocked) && user?.username}</span>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora beatae !</p>
                 </div>
             </div>
@@ -148,14 +149,14 @@ return (
                 <img src="./camera.png" alt="" />
                 <img src="./mic.png" alt="" />
             </div>
-            <input type="text" value={input} onChange={(e)=>(setInput(e.target.value))} placeholder="Type a message...."/>
+            <input type="text" value={input} onChange={(e)=>(setInput(e.target.value))} placeholder={(isCurrentUserBlocked || isReceiverBlocked) ? "You cannot send message to blocked users" :"Type a message...."} disabled={isCurrentUserBlocked || isReceiverBlocked} />
             <div className="emoji">
                 <img src="./emoji.png" alt="" onClick={()=>(setOpen((prev)=>!prev))} />
                 <div className="picker">
                     <EmojiPicker open={open} onEmojiClick={handleEmoji} />
                 </div>
             </div>
-            <button className="sendButton" onClick={handleSend}>Send</button>
+            <button className="sendButton" onClick={handleSend} disabled={isCurrentUserBlocked || isReceiverBlocked}>Send</button>
         </div>
     </div>
 )
