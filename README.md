@@ -1,3 +1,6 @@
-# Lama Dev Chat App Starter template
+# Chat App with React and Firebase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a very basic chat application that I developed while following a tutorial. It covers some basic concepts of react alongside covering firebase. I have used three services from firebase in this project:
+ - Authentication
+ - Firestore Database
+ - Firebase Storage
